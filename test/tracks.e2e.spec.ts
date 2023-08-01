@@ -172,7 +172,6 @@ describe('Tracks (e2e)', () => {
         artistId,
         albumId,
       } = updateResponse.body;
-
       expect(name).toBe(createTrackDto.name);
       expect(artistId).toBe(createTrackDto.artistId);
       expect(albumId).toBe(createTrackDto.albumId);
