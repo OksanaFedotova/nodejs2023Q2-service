@@ -1,11 +1,7 @@
 import { validate } from 'uuid';
 import { StatusCodes } from 'http-status-codes';
 import { request } from './lib';
-import {
-  getTokenAndUserId,
-  shouldAuthorizationBeTested,
-  removeTokenUser,
-} from './utils';
+import { getTokenAndUserId, shouldAuthorizationBeTested, removeTokenUser } from './utils';
 import { usersRoutes } from './endpoints';
 
 const createUserDto = {
@@ -42,9 +38,7 @@ describe('Users (e2e)', () => {
 
   describe('GET', () => {
     it('should correctly get all users', async () => {
-      const response = await unauthorizedRequest
-        .get(usersRoutes.getAll)
-        .set(commonHeaders);
+      const response = await unauthorizedRequest.get(usersRoutes.getAll).set(commonHeaders);
       expect(response.status).toBe(StatusCodes.OK);
       expect(response.body).toBeInstanceOf(Array);
     });
@@ -118,10 +112,7 @@ describe('Users (e2e)', () => {
 
     it('should respond with BAD_REQUEST in case of invalid required data', async () => {
       const responses = await Promise.all([
-        unauthorizedRequest
-          .post(usersRoutes.create)
-          .set(commonHeaders)
-          .send({}),
+        unauthorizedRequest.post(usersRoutes.create).set(commonHeaders).send({}),
         unauthorizedRequest
           .post(usersRoutes.create)
           .set(commonHeaders)
@@ -136,11 +127,9 @@ describe('Users (e2e)', () => {
           .send({ login: null, password: 12345 }),
       ]);
 
-      expect(
-        responses.every(
-          ({ statusCode }) => statusCode === StatusCodes.BAD_REQUEST,
-        ),
-      ).toBe(true);
+      expect(responses.every(({ statusCode }) => statusCode === StatusCodes.BAD_REQUEST)).toBe(
+        true,
+      );
     });
   });
 
@@ -165,13 +154,7 @@ describe('Users (e2e)', () => {
 
       expect(updateResponse.statusCode).toBe(StatusCodes.OK);
 
-      const {
-        id: updatedId,
-        version,
-        login,
-        createdAt,
-        updatedAt,
-      } = updateResponse.body;
+      const { id: updatedId, version, login, createdAt, updatedAt } = updateResponse.body;
 
       expect(login).toBe(createUserDto.login);
       expect(updateResponse.body).not.toHaveProperty('password');

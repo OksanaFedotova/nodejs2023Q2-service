@@ -1,11 +1,7 @@
 import { validate } from 'uuid';
 import { StatusCodes } from 'http-status-codes';
 import { request } from './lib';
-import {
-  getTokenAndUserId,
-  shouldAuthorizationBeTested,
-  removeTokenUser,
-} from './utils';
+import { getTokenAndUserId, shouldAuthorizationBeTested, removeTokenUser } from './utils';
 import { tracksRoutes } from './endpoints';
 
 const createTrackDto = {
@@ -44,9 +40,7 @@ describe('Tracks (e2e)', () => {
 
   describe('GET', () => {
     it('should correctly get all tracks', async () => {
-      const response = await unauthorizedRequest
-        .get(tracksRoutes.getAll)
-        .set(commonHeaders);
+      const response = await unauthorizedRequest.get(tracksRoutes.getAll).set(commonHeaders);
 
       expect(response.status).toBe(StatusCodes.OK);
       expect(response.body).toBeInstanceOf(Array);
@@ -118,10 +112,7 @@ describe('Tracks (e2e)', () => {
 
     it('should respond with BAD_REQUEST in case of invalid required data', async () => {
       const responses = await Promise.all([
-        unauthorizedRequest
-          .post(tracksRoutes.create)
-          .set(commonHeaders)
-          .send({}),
+        unauthorizedRequest.post(tracksRoutes.create).set(commonHeaders).send({}),
         unauthorizedRequest.post(tracksRoutes.create).set(commonHeaders).send({
           name: 'TEST_TRACK',
         }),
@@ -134,11 +125,9 @@ describe('Tracks (e2e)', () => {
         }),
       ]);
 
-      expect(
-        responses.every(
-          ({ statusCode }) => statusCode === StatusCodes.BAD_REQUEST,
-        ),
-      ).toBe(true);
+      expect(responses.every(({ statusCode }) => statusCode === StatusCodes.BAD_REQUEST)).toBe(
+        true,
+      );
     });
   });
 
@@ -165,14 +154,7 @@ describe('Tracks (e2e)', () => {
 
       expect(updateResponse.statusCode).toBe(StatusCodes.OK);
 
-      const {
-        id: updatedId,
-        name,
-        duration,
-        artistId,
-        albumId,
-      } = updateResponse.body;
-
+      const { id: updatedId, name, duration, artistId, albumId } = updateResponse.body;
       expect(name).toBe(createTrackDto.name);
       expect(artistId).toBe(createTrackDto.artistId);
       expect(albumId).toBe(createTrackDto.albumId);

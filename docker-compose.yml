@@ -1,0 +1,46 @@
+version: "3.9"
+services:
+  postgres:
+    container_name: postgres-container
+    build: ./docker/postgres
+    restart: always
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    volumes:
+       - volumedata:/data/postgres
+    networks:
+      - postgres
+
+  server:
+    container_name: server-container
+    build: 
+      context: .
+      dockerfile:  ./docker/server/Dockerfile
+    restart: always
+    env_file: .env
+    environment: 
+      PORT: ${PORT}
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      - postgres
+    links: 
+      - postgres:postgres
+    networks:
+      - postgres
+    volumes:
+      - .:/server
+      - volumedata:/server/node_modules
+
+volumes:
+  volumedata: {}
+
+networks:
+  postgres:
+    driver: bridge

@@ -4,8 +4,8 @@ info:
   description: Home music library service
   version: 1.0.0
 
-servers:
-  - url: /api
+# servers:
+#   - url: 
 
 components:
   schemas:

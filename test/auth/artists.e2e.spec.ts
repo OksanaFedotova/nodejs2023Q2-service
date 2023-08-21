@@ -14,10 +14,7 @@ describe('artist (e2e)', () => {
   const commonHeaders = { Accept: 'application/json' };
   describe('GET all artists', () => {
     it('should get UNAUTHORIZED without token presented', async () => {
-      await request
-        .get(artistsRoutes.getAll)
-        .set(commonHeaders)
-        .expect(StatusCodes.UNAUTHORIZED);
+      await request.get(artistsRoutes.getAll).set(commonHeaders).expect(StatusCodes.UNAUTHORIZED);
     });
   });
 

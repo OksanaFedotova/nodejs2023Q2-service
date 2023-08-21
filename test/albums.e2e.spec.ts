@@ -2,11 +2,7 @@ import { request } from './lib';
 import { StatusCodes } from 'http-status-codes';
 import { albumsRoutes, artistsRoutes, tracksRoutes } from './endpoints';
 import { validate } from 'uuid';
-import {
-  getTokenAndUserId,
-  shouldAuthorizationBeTested,
-  removeTokenUser,
-} from './utils';
+import { getTokenAndUserId, shouldAuthorizationBeTested, removeTokenUser } from './utils';
 
 const createAlbumDto = {
   name: 'TEST_ALBUM',
@@ -48,9 +44,7 @@ describe('Album (e2e)', () => {
 
   describe('GET', () => {
     it('should correctly get all albums', async () => {
-      const response = await unauthorizedRequest
-        .get(albumsRoutes.getAll)
-        .set(commonHeaders);
+      const response = await unauthorizedRequest.get(albumsRoutes.getAll).set(commonHeaders);
 
       expect(response.status).toBe(StatusCodes.OK);
       expect(response.body).toBeInstanceOf(Array);
@@ -121,10 +115,7 @@ describe('Album (e2e)', () => {
 
     it('should respond with BAD_REQUEST in case of invalid required data', async () => {
       const responses = await Promise.all([
-        unauthorizedRequest
-          .post(albumsRoutes.create)
-          .set(commonHeaders)
-          .send({}),
+        unauthorizedRequest.post(albumsRoutes.create).set(commonHeaders).send({}),
         unauthorizedRequest.post(albumsRoutes.create).set(commonHeaders).send({
           name: 'TEST_ALBUM',
         }),
@@ -137,11 +128,9 @@ describe('Album (e2e)', () => {
         }),
       ]);
 
-      expect(
-        responses.every(
-          ({ statusCode }) => statusCode === StatusCodes.BAD_REQUEST,
-        ),
-      ).toBe(true);
+      expect(responses.every(({ statusCode }) => statusCode === StatusCodes.BAD_REQUEST)).toBe(
+        true,
+      );
     });
   });
 

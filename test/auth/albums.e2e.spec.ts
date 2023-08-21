@@ -22,9 +22,7 @@ describe('Album (e2e)', () => {
 
   describe('GET album by id', () => {
     it('should get UNAUTHORIZED without token presented', async () => {
-      await request
-        .get(albumsRoutes.getById(randomUUID))
-        .expect(StatusCodes.UNAUTHORIZED);
+      await request.get(albumsRoutes.getById(randomUUID)).expect(StatusCodes.UNAUTHORIZED);
     });
   });
 

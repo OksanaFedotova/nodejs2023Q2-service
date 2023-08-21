@@ -15,10 +15,7 @@ describe('Users (e2e)', () => {
 
   describe('GET all users', () => {
     it('should get UNAUTHORIZED without token presented', async () => {
-      await request
-        .get(usersRoutes.getAll)
-        .set(commonHeaders)
-        .expect(StatusCodes.UNAUTHORIZED);
+      await request.get(usersRoutes.getAll).set(commonHeaders).expect(StatusCodes.UNAUTHORIZED);
     });
   });
 

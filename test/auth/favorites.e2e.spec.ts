@@ -10,10 +10,7 @@ describe('Favorites (e2e)', () => {
 
   describe('GET all favorites', () => {
     it('should get UNAUTHORIZED without token presented', async () => {
-      await request
-        .get(favoritesRoutes.getAll)
-        .set(commonHeaders)
-        .expect(StatusCodes.UNAUTHORIZED);
+      await request.get(favoritesRoutes.getAll).set(commonHeaders).expect(StatusCodes.UNAUTHORIZED);
     });
   });
 

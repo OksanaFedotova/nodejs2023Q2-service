@@ -17,10 +17,7 @@ describe('Tracks (e2e)', () => {
 
   describe('GET all tracks', () => {
     it('should get UNAUTHORIZED without token presented', async () => {
-      await request
-        .get(tracksRoutes.getAll)
-        .set(commonHeaders)
-        .expect(StatusCodes.UNAUTHORIZED);
+      await request.get(tracksRoutes.getAll).set(commonHeaders).expect(StatusCodes.UNAUTHORIZED);
     });
   });
 
